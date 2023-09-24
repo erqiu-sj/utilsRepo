@@ -21,12 +21,12 @@ func (receiver Map[T, V]) Keys() Slice[T] {
 }
 
 // Values 参考js Object.values
-func (receiver Map[T, V]) Values() Slice[V] {
+func (receiver Map[T, V]) Values() *Slice[V] {
 	keys := make(Slice[V], 0, len(receiver))
 	for _, val := range receiver {
 		keys.Push(val)
 	}
-	return keys
+	return &keys
 }
 
 func (receiver Map[T, V]) Has(k T) bool {
@@ -40,4 +40,14 @@ func (receiver Map[T, V]) Get(k T) (V, error) {
 		return value, nil
 	}
 	return value, errors.New(fmt.Sprint(k, "non-existent"))
+}
+
+func (receiver Map[T, V]) Add(key T, val V) Map[T, V] {
+	receiver[key] = val
+	return receiver
+}
+
+func (receiver Map[T, V]) del(key T) Map[T, V] {
+	delete(receiver, key)
+	return receiver
 }

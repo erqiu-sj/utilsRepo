@@ -62,3 +62,17 @@ func (s Slice[T]) ImmutablePush(ele T) Slice[T] {
 	result = append(result, ele)
 	return result
 }
+
+func (s Slice[T]) At(index int) T {
+	return s[index]
+}
+
+// Include 是否包含
+func (s Slice[T]) Include(value T) bool {
+	for _, t := range s {
+		if reflect.DeepEqual(t, value) {
+			return true
+		}
+	}
+	return false
+}
